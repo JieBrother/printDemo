@@ -6,8 +6,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface LoginAndRegisterMapper {
 
     /**
@@ -20,4 +22,7 @@ public interface LoginAndRegisterMapper {
 
     @Select("select count(1) from user where number = #{registerNum}")
     Integer exist(@Param("registerNum") String registerNum);
+
+    @Select("select count(1) from user where number = #{registerNum} and password = #{password}")
+    Integer login(User user);
 }

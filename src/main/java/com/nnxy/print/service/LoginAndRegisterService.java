@@ -37,4 +37,13 @@ public class LoginAndRegisterService {
             return false;
         }
     }
+
+    public boolean login(User user) {
+        Integer count = loginAndRegisterMapper.login(user);
+        if(1 == count){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
