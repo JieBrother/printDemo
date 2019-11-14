@@ -40,15 +40,22 @@ public class LoginAndRegisterController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public Message login(User user){
-
+    public Message login(User user) {
+        boolean exist = loginAndRegisterService.exist(user.getRegisterNum());
+        if (exist == false) {
+            return new Message("error", "没有这个用户");
+        } else {
             boolean flag = loginAndRegisterService.login(user);
             System.out.println(user);
-            if(flag == true){
-                return new Message("success","登录成功");
-            }else{
-                return new Message("error","用户名或密码错误");
+            if (flag == true) {
+                User loginedUser = loginAndRegisterService.getUser(user);
+                System.out.println(loginedUser);
+                loginedUser.setRegisterNum(user.getRegisterNum());
+                return new Message("success","登陆成功",loginedUser);
+            } else {
+                return new Message("error", "用户名或密码错误");
             }
+        }
 
 
     }
